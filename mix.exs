@@ -12,7 +12,7 @@ defmodule Httpestle.Mixfile do
   #
   # Type `mix help compile.app` for more information
   def application do
-    [applications: [:logger, :gun]]
+    [applications: [:logger, :hackney]]
   end
 
   # Dependencies can be Hex packages:
@@ -25,6 +25,7 @@ defmodule Httpestle.Mixfile do
   #
   # Type `mix help deps` for more examples and options
   defp deps do
-    [{:gun, github: "extend/gun"}]
+    [{:hackney, "~> 1.1.0"},
+     {:poison, "~> 1.4.0", only: :test}]
   end
 end

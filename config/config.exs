@@ -23,4 +23,4 @@ use Mix.Config
 #
 #     import_config "#{Mix.env}.exs"
 
-config :httpestle, :adapter, :gun
+config :httpestle, :adapter, HTTPestle.Adapters.Hackney

@@ -1,13 +1,17 @@
 defmodule HTTPestle.Adapters.Hackney do
   @behaviour HTTPestle.Adapter
 
-  def request(method, url, headers, nil) do
-    request(method, url, headers, "")
-  end
+  alias HTTPestle.Request
+  alias HTTPestle.Response
 
-  def request(method, url, headers, payload) do
-    {:ok, status, resp_headers, client} = :hackney.request(method, url, headers, payload)
-    {:ok, body} = :hackney.body(client)
-    {:ok, status, resp_headers, body}
+  def request(%Request{} = req) do
+    %Request{method: method, url: url, headers: headers, payload: payload} = req
+    case :hackney.request(method, url, headers, payload || "") do
+      {:ok, status, resp_headers, client} ->
+        {:ok, body} = :hackney.body(client)
+        {:ok, %Response{status: status, headers: resp_headers, body: body}}
+      error ->
+        error
+    end
   end
 end

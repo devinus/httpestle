@@ -6,15 +6,15 @@ defmodule HTTPestle.Adapters.HackneyTest do
   end
 
   test "get" do
-    {:ok, status, headers, body} = HTTPestle.get("http://httpbin.org/get")
-    assert status == 200
-    assert is_list(headers)
-    assert is_binary(body)
+    {:ok, resp} = HTTPestle.get("http://httpbin.org/get")
+    assert resp.status == 200
+    assert is_list(resp.headers)
+    assert is_binary(resp.body)
   end
 
   test "post" do
-    {:ok, status, _headers, body} = HTTPestle.post("http://httpbin.org/post", "payload")
-    assert status == 200
-    assert Poison.decode!(body)["data"] == "payload"
+    {:ok, resp} = HTTPestle.post("http://httpbin.org/post", "payload")
+    assert resp.status == 200
+    assert Poison.decode!(resp.body)["data"] == "payload"
   end
 end
